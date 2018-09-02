@@ -1,1 +1,1 @@
-web:    java -jar target/servidor.jar
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* co.edu.escuelaing.arem.servidor
