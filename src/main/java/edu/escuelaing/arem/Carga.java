@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.file.Files;
 
 /**
  *
@@ -25,6 +26,9 @@ public class Carga {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String inputLine, outputLine;
         String inputu = null;
+        String format = null;
+        String data = null;
+        byte[] bytes = null;
         while ((inputLine = in.readLine()) != null) {
             try {
                 if (inputLine.startsWith("GET")) {
@@ -44,28 +48,13 @@ public class Carga {
             temp = inputu.split(" ");
             String flag = "";
             if (temp[1].endsWith(".html")) {
-                File f = new File(temp[1].substring(1));
-                BufferedReader entrada;
-
-                try {
-                    entrada = new BufferedReader(new FileReader(f));
-                    while (entrada.ready()) {
-                        flag += entrada.readLine();
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                bytes = Files.readAllBytes(new File(temp[1].substring(1)).toPath());
+                data = "" + bytes.length;
+                format = "text/html";
             } else if (temp[1].endsWith("png")) {
-                inputu = ("<!DOCTYPE html>"
-                        + "<html>"
-                        + "<head>"
-                        + "<title>Page Title</title>"
-                        + "</head>"
-                        + "<body>"
-                        + "<img src=\"" + temp[1].substring(1) + "\" height=\"200\" width=\"200\" >"
-                        + "</body>"
-                        + "</html>");
+                bytes = Files.readAllBytes(new File(temp[1].substring(1)).toPath());
+                data = "" + bytes.length;
+                format = "image/png";
             } else {
                 inputu = ("<!DOCTYPE html>"
                         + "<html>"
@@ -79,13 +68,24 @@ public class Carga {
             inputu = flag;
         }
         outputLine = "HTTP/1.1 200 OK\r\n"
-                + "Content-Type: text/html\r\n"
-                + "\r\n"
-                + inputu
-                + inputLine;
-        out.println(outputLine);
-        out.close();
+                + "Content-Type: " + format + "\r\n" + "Content-Length: " + data+ "\r\n\r\n";
+        byte[] bite = outputLine.getBytes();
+        try {
+            byte[] salida = new byte[bytes.length + bite.length];
+
+            for (int i = 0; i < bite.length; i++) {
+                salida[i] = bite[i];
+            }
+            for (int i = bite.length; i < bite.length + bytes.length; i++) {
+                salida[i] = bytes[i - bite.length];
+            }
+           
+        
+        clientSocket.getOutputStream().write(bytes);
         clientSocket.close();
+        
+        } catch (NullPointerException e) {
+        }
     }
 
 }
