@@ -20,8 +20,7 @@ import java.nio.file.Files;
  */
 public class Carga {
 
-    public void carga(Socket clientSocket) throws IOException {
-
+    public void carga(Socket clientSocket) throws IOException  {
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String inputLine, outputLine;
@@ -48,11 +47,11 @@ public class Carga {
             temp = inputu.split(" ");
             String flag = "";
             if (temp[1].endsWith(".html")) {
-                bytes = Files.readAllBytes(new File(temp[1].substring(1)).toPath());
+                bytes = Files.readAllBytes(new File("./" + temp[1].substring(1)).toPath());
                 data = "" + bytes.length;
                 format = "text/html";
             } else if (temp[1].endsWith("png")) {
-                bytes = Files.readAllBytes(new File(temp[1].substring(1)).toPath());
+                bytes = Files.readAllBytes(new File("./" + temp[1].substring(1)).toPath());
                 data = "" + bytes.length;
                 format = "image/png";
             } else {
@@ -68,24 +67,27 @@ public class Carga {
             inputu = flag;
         }
         outputLine = "HTTP/1.1 200 OK\r\n"
-                + "Content-Type: " + format + "\r\n" + "Content-Length: " + data+ "\r\n\r\n";
+                + "Content-Type: "
+                + format
+                + "\r\n"
+                + "Content-Length: "
+                + data
+                + "\r\n\r\n";
         byte[] bite = outputLine.getBytes();
         try {
-            byte[] salida = new byte[bytes.length + bite.length];
-
-            for (int i = 0; i < bite.length; i++) {
-                salida[i] = bite[i];
-            }
-            for (int i = bite.length; i < bite.length + bytes.length; i++) {
-                salida[i] = bytes[i - bite.length];
-            }
-           
-        
-        clientSocket.getOutputStream().write(bytes);
-        clientSocket.close();
-        
-        } catch (NullPointerException e) {
+        byte[] salida = new byte[bytes.length + bite.length];
+        for (int i = 0; i < bite.length; i++) {
+            salida[i] = bite[i];
         }
+        for (int i = bite.length; i < bite.length + bytes.length; i++) {
+            salida[i] = bytes[i - bite.length];
+        }
+        clientSocket.getOutputStream().write(salida);
+        } catch (java.lang.NullPointerException e){
+            
+        }
+         clientSocket.close();
+
     }
 
 }

@@ -23,6 +23,7 @@ public class servidor {
         }
         Socket clientSocket = null;
         while (true) {
+            
             try {
                 System.out.println("Listo para recibir ...");
                 clientSocket = serverSocket.accept();
