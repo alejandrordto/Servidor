@@ -38,9 +38,6 @@ public class Carga {
             } catch (java.lang.StringIndexOutOfBoundsException e) {
             }
             //System.out.println(inputLine);
-            if (!in.ready()) {
-                break;
-            }
         }
         if (inputu != null) {
             String[] temp;
