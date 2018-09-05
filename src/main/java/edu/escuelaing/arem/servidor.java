@@ -22,7 +22,7 @@ public class servidor {
             System.exit(1);
         }
         Socket clientSocket = null;
-        //while (true) {
+        while (true) {
             
             try {
                 System.out.println("Listo para recibir ...");
@@ -36,5 +36,5 @@ public class servidor {
             
         }
 
-    //}
+    }
 }
