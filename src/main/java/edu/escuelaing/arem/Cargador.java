@@ -1,34 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.escuelaing.arem;
-
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
- *
- * @author AsusPC
+ *clase que extiende un hilo, y que sera la que usaremos para usar el cliente
+ * @author Alejandro Rodriguez
  */
-public class Carga extends Thread {
 
+public class Cargador extends Thread {
     private Socket clientSocket;
-
-    public Carga(Socket clientSocket) {
+    /**
+     * metodo creador de el cargador
+     * @param clientSocket representa el socket de cliente que se va a usar 
+     */
+    public Cargador(Socket clientSocket) {
         this.clientSocket = clientSocket;
 
     }
-
     @Override
     public void run() {
         try {
@@ -42,9 +37,7 @@ public class Carga extends Thread {
             while ((inputLine = in.readLine()) != null) {
                 try {
                     if (inputLine.startsWith("GET")) {
-                        if (!inputLine.startsWith("GET / ")) {
-                            inputu = inputLine;
-                        }
+                        inputu = inputLine;
                     }
                 } catch (java.lang.StringIndexOutOfBoundsException e) {
                 }
@@ -57,6 +50,7 @@ public class Carga extends Thread {
                 String[] temp;
                 temp = inputu.split(" ");
                 String flag = "";
+                try {
                 if (temp[1].endsWith(".html")) {
                     bytes = Files.readAllBytes(new File("./" + temp[1].substring(1)).toPath());
                     data = "" + bytes.length;
@@ -66,14 +60,15 @@ public class Carga extends Thread {
                     data = "" + bytes.length;
                     format = "image/png";
                 } else {
-                    inputu = ("<!DOCTYPE html>"
-                            + "<html>"
-                            + "<head>"
-                            + "</head>"
-                            + "<body>"
-                            + "Por favor ingrese un recurso valido"
-                            + "</body>"
-                            + "</html>");
+                    bytes = Files.readAllBytes(new File("./error.html").toPath());
+                    data = "" + bytes.length;
+                    format = "text/html";
+                    
+                }
+                } catch (NoSuchFileException e){
+                    bytes = Files.readAllBytes(new File("./error.html").toPath());
+                    data = "" + bytes.length;
+                    format = "text/html";
                 }
                 inputu = flag;
             }
@@ -101,7 +96,7 @@ public class Carga extends Thread {
 
         }
         catch (IOException ex) {
-     Logger.getLogger(Carga.class.getName()).log(Level.SEVERE, null, ex);
+     Logger.getLogger(Cargador.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
     

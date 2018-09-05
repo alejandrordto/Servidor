@@ -1,12 +1,21 @@
 package edu.escuelaing.arem;
 
+
 import java.awt.Image;
 import java.net.*;
 import java.io.*;
 import javax.swing.ImageIcon;
-
+/**
+ * clase servidor, es un servidor web basico pero capas de respinder perticiones html y png
+ * @author Alejandro Rodriguez
+ */
 public class servidor {
-
+    /**
+     * Hilo principal del servidor cuenta con dos sockets, un cliente y un servidor, se asigna el puerto
+     * del servidor y se procede a trabajar con la clase cargador.
+     * @param args
+     * @throws IOException 
+     */
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         Integer PORT;
@@ -31,7 +40,7 @@ public class servidor {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
-            Carga carga = new Carga(clientSocket);
+            Cargador carga = new Cargador(clientSocket);
             carga.start();
             
         }
