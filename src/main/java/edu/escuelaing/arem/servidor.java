@@ -31,8 +31,8 @@ public class servidor {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
-            Carga carga = new Carga();
-            carga.carga(clientSocket);
+            Carga carga = new Carga(clientSocket);
+            carga.start();
             
         }
 
