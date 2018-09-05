@@ -24,6 +24,13 @@ public class Cargador extends Thread {
         this.clientSocket = clientSocket;
 
     }
+    /**
+     * metodo en el cual se va a leer la peticion echa por el cliente, luego con el GET
+     * se sacara el recurso pedido, si este no existe o no se coloca, se mandara por defecto
+     * a una pagina de error, si hay un png el formato sera de png, y con un html el formato
+     * sera de texto, se sacaran los bytes del archivo y de un encabezado, estos se juntaran
+     * y el cliente los colocara en la pantalla.
+     */
     @Override
     public void run() {
         try {

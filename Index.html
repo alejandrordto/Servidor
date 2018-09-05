@@ -8,15 +8,54 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function genera_tabla() {
+            // Obtener la referencia del elemento body
+            var body = document.getElementsByTagName("body")[0];
+
+            // Crea un elemento <table> y un elemento <tbody>
+            var tabla   = document.createElement("table");
+            var tblBody = document.createElement("tbody");
+
+            // Crea las celdas
+            for (var i = 0; i < 5; i++) {
+            // Crea las hileras de la tabla
+            var hilera = document.createElement("tr");
+
+            for (var j = 0; j < 2; j++) {
+            // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+            // texto sea el contenido de <td>, ubica el elemento <td> al final
+            // de la hilera de la tabla
+            var celda = document.createElement("td");
+            var textoCelda = document.createTextNode("celda en la hilera "+i+", columna "+j);
+            celda.appendChild(textoCelda);
+            hilera.appendChild(celda);
+            }
+
+            // agrega la hilera al final de la tabla (al final del elemento tblbody)
+            tblBody.appendChild(hilera);
+            }
+
+            // posiciona el <tbody> debajo del elemento <table>
+            tabla.appendChild(tblBody);
+            // appends <table> into <body>
+            body.appendChild(tabla);
+            // modifica el atributo "border" de la tabla y lo fija a "2";
+            tabla.setAttribute("border", "2");
+            }
+        </script>
     </head>
+
     <body>
-        <h1>Prueba</h1><br/><div>TPrueba</div>
-        
+        <h1>Prueba servidor web</h1><br/>
+        <div>ejemplos de imagenes</div> 
+        <div>aca podemos ver una imagen sacada del repositorio del proyecto</div>
         <img src="face.png">
-        <img src="face.png">
-        <img src="face.png">
-        <img src="face.png">
-       
-        
+        <div>esta imagen es sacada sin embargo de la internet</div>
+        <img style="-webkit-user-select: none;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhhadTgwBMYK4xX7iXgZVcY_0jYyjjpXT-S9AI6QaePhi0TVR3Cg">
+        <br/>
+        <h2>ejemplo de java script</h2>
+        <div>aca vamos a crear una tabla usando Java script</div>
+        <input type="button" value="Genera una tabla" onclick="genera_tabla()">
     </body>
 </html>
