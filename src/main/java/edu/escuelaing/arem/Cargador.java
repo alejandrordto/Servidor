@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * @author Alejandro Rodriguez
  */
 
-public class Cargador extends Thread {
+public class Cargador implements Runnable{
     private Socket clientSocket;
     /**
      * metodo creador de el cargador
@@ -31,7 +31,6 @@ public class Cargador extends Thread {
      * sera de texto, se sacaran los bytes del archivo y de un encabezado, estos se juntaran
      * y el cliente los colocara en la pantalla.
      */
-    @Override
     public void run() {
         try {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);

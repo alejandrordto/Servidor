@@ -4,6 +4,8 @@ package edu.escuelaing.arem;
 import java.awt.Image;
 import java.net.*;
 import java.io.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.ImageIcon;
 /**
  * clase servidor, es un servidor web basico pero capas de respinder perticiones html y png
@@ -31,6 +33,7 @@ public class servidor {
             System.exit(1);
         }
         Socket clientSocket = null;
+        ExecutorService ex = Executors.newFixedThreadPool(25);
         while (true) {
             
             try {
@@ -41,7 +44,7 @@ public class servidor {
                 System.exit(1);
             }
             Cargador carga = new Cargador(clientSocket);
-            carga.start();
+            ex.execute(carga);
             
         }
 
