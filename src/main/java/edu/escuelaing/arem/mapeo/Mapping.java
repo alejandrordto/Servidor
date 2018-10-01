@@ -1,6 +1,9 @@
 
-package edu.escuelaing.arem;
-
+package edu.escuelaing.arem.mapeo;
+/**
+ *anotacion Mapping para los metodos
+ * @author Alejnadro Rodriguez del Toro
+ */
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

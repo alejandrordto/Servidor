@@ -1,16 +1,18 @@
-package edu.escuelaing.arem;
+package edu.escuelaing.arem.servidor;
 
 
-import java.awt.Image;
+
+import edu.escuelaing.arem.mapeo.Component;
+import edu.escuelaing.arem.mapeo.Mapping;
 import java.net.*;
 import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.swing.ImageIcon;
 /**
  * clase servidor, es un servidor web basico pero capas de respinder perticiones html y png
  * @author Alejandro Rodriguez
  */
+@Component  
 public class servidor {
     /**
      * Hilo principal del servidor cuenta con dos sockets, un cliente y un servidor, se asigna el puerto
@@ -18,7 +20,9 @@ public class servidor {
      * @param args
      * @throws IOException 
      */
-    public static void main(String[] args) throws IOException {
+    @Mapping("/results")
+    //public static void main(String[] args) throws IOException {
+    public void ejecucion(){
         ServerSocket serverSocket = null;
         Integer PORT;
         try {
@@ -33,7 +37,7 @@ public class servidor {
             System.exit(1);
         }
         Socket clientSocket = null;
-        ExecutorService ex = Executors.newFixedThreadPool(25);
+        ExecutorService ex = Executors.newFixedThreadPool(15);
         while (true) {
             
             try {

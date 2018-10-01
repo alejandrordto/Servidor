@@ -6,21 +6,26 @@ import java.util.concurrent.Executors;
 
 
 /**
- *
- * @author estudiante
+ *clase que actua como el cliente aws.
+ * @author Alejandro Rodriguez del Toro
  * 
  **/
 public class client {
-    public static Integer threads= 4;
-    public static Integer request= 4;
+    public static Integer hilos;
+    public static Integer peticiones;
 
-    
+    /**
+     * metodo principa del cliente, recibe argumentos en el cual estara
+     * el link, puede tener o no el recurso que queramos buscar.
+     * @param args
+     * @throws IOException 
+     */
     public static void main(String[] args) throws IOException {
-        
-        ExecutorService executor = Executors.newFixedThreadPool(threads);
-        while (request>0){
+        hilos=25;
+        ExecutorService executor = Executors.newFixedThreadPool(hilos);
+        while (hilos>0){
             executor.execute(new URLReader(args));
-            request-=1;
+            hilos-=1;
         }
         executor.shutdown();
         while (!executor.isTerminated()) {

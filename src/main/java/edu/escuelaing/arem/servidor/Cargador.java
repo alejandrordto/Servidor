@@ -1,4 +1,4 @@
-package edu.escuelaing.arem;
+package edu.escuelaing.arem.servidor;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
